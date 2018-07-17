@@ -447,6 +447,12 @@ func ({{.ReceiverName }} {{ if or .IsTuple .IsComplexObject .IsAdditionalPropert
     }
   {{ end }}
 
+	if vEx, ok := interface{}(m).(ValidationEx); ok {
+		if err := vEx.ValidateEx(formats); err != nil {
+			res = append(res, err)
+		}
+	}
+
   if len(res) > 0 {
     return errors.CompositeValidationError(res...)
   }
